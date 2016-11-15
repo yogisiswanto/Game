@@ -44,6 +44,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap martabak;
     private GoogleMap mKontrakan;
 
+    //contoh
+    private GoogleMap rumah;
+    private LatLng poisisirumah;
+
     private LatLng Wadoel;
     private LatLng kantintujuh;
     private LatLng PadangO;
@@ -87,7 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected  void  createLocationRequest(){
         mLocationRequest = new LocationRequest();
         //10 detik sekli minta lokasi (10000ms = 10 detik)
-        mLocationRequest.setInterval(10000);
+        mLocationRequest.setInterval(1000000);
         //tapi tidak boleh cepat dari 5 detik
         mLocationRequest.setFastestInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -125,6 +129,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ssg = googleMap;
         martabak = googleMap;
 
+        //contoh
+        rumah = googleMap;
+
         // Add a marker in Sydney and move the camera
         /*LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -144,10 +151,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Set kamera sesuai batas UPI
         //mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(UPI, 0));
 
+        //contoh
         //marker kontrakan
         Kontrakan = new LatLng(-6.8663673, 107.5918008);
         mKontrakan.addMarker(new MarkerOptions().position(Kontrakan).title("Kontrakan"));
 
+        poisisirumah = new LatLng(-6.9535871,107.66612);
+        rumah.addMarker(new MarkerOptions().position(poisisirumah).title("Rumah"));
+
+        //marker lokasi tempat makan
         //marker warung jadoel
         Wadoel = new LatLng(-6.8649716,107.5936292);
         wdMap.addMarker(new MarkerOptions().position(Wadoel).title("Warung Jadoel Cafe"));
@@ -237,6 +249,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ad.show();*/
         // Get instance of Vibrator from current Context
 
+        //Mengerakan Kamera sesuai lokasi sekarang
         mPosSekarang.setPosition(new LatLng(location.getLatitude(),location.getLongitude()));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 17));
 
@@ -256,14 +269,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ad.setMessage("Anda Berada di Rumah Makan Padang Omuda");
             ad.show();
         }*/
+
+        //untuk notifikasi getar
         double toKontrakan = distFrom((float)location.getLatitude(),(float)location.getLongitude(),getLat(Kontrakan),getLong(Kontrakan));
         double toPadangO = distFrom((float)location.getLatitude(),(float)location.getLongitude(),getLat(PadangO),getLong(PadangO));
         double toKantin = distFrom((float)location.getLatitude(),(float)location.getLongitude(),getLat(kantintujuh),getLong(kantintujuh));
         double toSSG = distFrom((float)location.getLatitude(),(float)location.getLongitude(),getLat(posisiSSG),getLong(posisiSSG));
         double toMartabak = distFrom((float)location.getLatitude(),(float)location.getLongitude(),getLat(posisiMartabak),getLong(posisiMartabak));
+        double toWadoel = distFrom((float)location.getLatitude(),(float)location.getLongitude(),getLat(Wadoel),getLong(Wadoel));
+
+
 
         //contoh
         double toGIK = distFrom((float)location.getLatitude(),(float)location.getLongitude(),getLat(gedungIlkom),getLong(gedungIlkom));
+        double toRumah = distFrom((float)location.getLatitude(),(float)location.getLongitude(),getLat(poisisirumah),getLong(poisisirumah));
 
         System.out.println("Jarak : " + toKontrakan);
         if(toKontrakan >= 0 && toKontrakan <=12){
@@ -322,6 +341,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ad.show();
         }
 
+        if(toWadoel >= 0 && toWadoel <=12){
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            // Vibrate for 400 milliseconds
+            v.vibrate(400);
+            System.out.println("Jarak : " + toWadoel);
+            mPosSekarang.setPosition(new LatLng(location.getLatitude(),location.getLongitude()));
+            AlertDialog ad = new AlertDialog.Builder(this).create();
+            ad.setMessage("Anda dekat lokasi Warung Jadoel");
+            ad.show();
+        }
+
         //contoh
         if(toGIK >= 0 && toGIK <=12){
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -333,8 +363,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ad.setMessage("Anda dekat lokasi GIK");
             ad.show();
         }
+
+        if(toRumah >= 0 && toRumah <=12){
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            // Vibrate for 400 milliseconds
+            v.vibrate(400);
+            System.out.println("Jarak : " + toRumah);
+            mPosSekarang.setPosition(new LatLng(location.getLatitude(),location.getLongitude()));
+            AlertDialog ad = new AlertDialog.Builder(this).create();
+            ad.setMessage("Anda dekat lokasi");
+            ad.show();
+        }
     }
 
+    //fungsi untuk menghitung jarak
     public static float distFrom(float lat1, float lng1, float lat2, float lng2) {
         double earthRadius = 6371000; //meters
         double dLat = Math.toRadians(lat2-lat1);
@@ -363,8 +405,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         return Float.parseFloat(sLong);
     }
-
-
-
 
 }
