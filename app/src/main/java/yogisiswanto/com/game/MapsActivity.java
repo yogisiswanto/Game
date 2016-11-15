@@ -1,4 +1,5 @@
 package yogisiswanto.com.game;
+
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;

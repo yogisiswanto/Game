@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         //cek login
         //when login is correct, will be directly to MapsActivity
-        if(mail.getText().toString().equals("yogisiswanto@gmail.com") && pass.getText().toString().equals("T3268GH")){
+        if(mail.getText().toString().equals("example@mail.com") && pass.getText().toString().equals("nilaimobprogA")){
 
             //show toast
             Toast toast = Toast.makeText(getApplicationContext(), "Login Berhasil", Toast.LENGTH_LONG);

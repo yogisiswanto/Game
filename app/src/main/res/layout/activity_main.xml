@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="yogisiswanto.com.game.MainActivity">
+    tools:context="yogisiswanto.com.game.MainActivity"
+    android:background="@android:color/holo_orange_light">
 
     <TextView
         android:text="Log In"
@@ -28,7 +29,8 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="94dp"
-        android:id="@+id/mail" />
+        android:id="@+id/mail"
+        android:hint="put your e-mail here" />
 
     <EditText
         android:layout_height="wrap_content"
@@ -37,7 +39,8 @@
         android:id="@+id/pass"
         android:layout_width="320dp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:hint="put your pass word here" />
 
     <Button
         android:text="Log In"
@@ -47,5 +50,29 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
         android:id="@+id/button"
-        android:onClick="button" />
+        android:onClick="button"
+        android:background="@color/wallet_holo_blue_light"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_body_color" />
+
+    <TextView
+        android:text="Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pass"
+        android:layout_alignLeft="@+id/pass"
+        android:layout_alignStart="@+id/pass"
+        android:layout_marginBottom="12dp"
+        android:id="@+id/textView3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <TextView
+        android:text="E-Mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="56dp"
+        android:id="@+id/textView2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_alignBottom="@+id/mail"
+        android:layout_alignLeft="@+id/mail"
+        android:layout_alignStart="@+id/mail" />
 </RelativeLayout>
