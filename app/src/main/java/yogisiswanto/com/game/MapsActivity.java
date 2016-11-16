@@ -25,14 +25,14 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,LocationListener,
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
     private static final int MY_PERMISSIONS_REQUEST = 99;//int bebas, maks 1 byte
     private GoogleMap mMap;
     private Marker mPosSekarang;
-    GoogleApiClient mGoogleApiClient ;
+    GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
 
@@ -52,7 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LatLng kantintujuh;
     private LatLng PadangO;
     private LatLng posisiSSG;
-    private  LatLng posisiMartabak;
+    private LatLng posisiMartabak;
     private LatLng Kontrakan;
     private LatLng posSekarang;
     private LatLng gedungIlkom;
@@ -74,9 +74,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         // cek apakah sudah diijinkan oleh user, jika belum tampilkan dialog
-        if (ActivityCompat.checkSelfPermission (this,android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED )
-        {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST);
@@ -88,7 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mLocationRequest, this);
     }
 
-    protected  void  createLocationRequest(){
+    protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         //10 detik sekli minta lokasi (10000ms = 10 detik)
         mLocationRequest.setInterval(1000000);
@@ -108,6 +107,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         buildGoogleApiClient();
         createLocationRequest();
     }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -140,7 +140,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //batas lokasi UPI
         //urutan harus kiri bawah, kanan atas kotak
         LatLngBounds UPI = new LatLngBounds(
-                new LatLng(-6.863273, 107.587212),new LatLng(-6.858025, 107.597839));
+                new LatLng(-6.863273, 107.587212), new LatLng(-6.858025, 107.597839));
 
 
         //marker gedung ilkom
@@ -156,28 +156,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Kontrakan = new LatLng(-6.8663673, 107.5918008);
         mKontrakan.addMarker(new MarkerOptions().position(Kontrakan).title("Kontrakan"));
 
-        poisisirumah = new LatLng(-6.9535871,107.66612);
+        poisisirumah = new LatLng(-6.9535871, 107.66612);
         rumah.addMarker(new MarkerOptions().position(poisisirumah).title("Rumah"));
 
         //marker lokasi tempat makan
         //marker warung jadoel
-        Wadoel = new LatLng(-6.8649716,107.5936292);
+        Wadoel = new LatLng(-6.8649716, 107.5936292);
         wdMap.addMarker(new MarkerOptions().position(Wadoel).title("Warung Jadoel Cafe"));
 
         //marker Padang Omuda
-        PadangO = new LatLng(-6.8658617,107.5916296);
+        PadangO = new LatLng(-6.8658617, 107.5916296);
         PadangOmuda.addMarker(new MarkerOptions().position(PadangO).title("Rumah Makan Padang Omuda"));
 
         //marker kantin 77
-        kantintujuh = new LatLng(-6.863624,107.589367);
+        kantintujuh = new LatLng(-6.863624, 107.589367);
         kantinT.addMarker(new MarkerOptions().position(kantintujuh).title("Kantin 77"));
 
         //marker SSG
-        posisiSSG = new LatLng(-6.8637613,107.5898821);
+        posisiSSG = new LatLng(-6.8637613, 107.5898821);
         ssg.addMarker(new MarkerOptions().position(posisiSSG).title("SSGC"));
 
         //marker martabak
-        posisiMartabak = new LatLng(-6.864408,107.5921445);
+        posisiMartabak = new LatLng(-6.864408, 107.5921445);
         martabak.addMarker(new MarkerOptions().position(posisiMartabak).title("Martabak lezat Group Bandung"));
 
 
@@ -190,6 +190,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         posSekarang = new LatLng(-6.8663673, 107.5918008);
 
         mPosSekarang = mMap.addMarker(new MarkerOptions().position(posSekarang).title("PosSekarang").flat(true));
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
 
         //set kamera sesuai batas di Ilkom
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(posSekarang, 17));
